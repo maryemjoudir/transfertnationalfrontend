@@ -4,9 +4,9 @@ import Login from './components/Auth/Login'
 function App() {
 
   return (
-    <>
+    <div>
     <Login/>
-    </>
+    </div>
   )
 }
 
