@@ -5,6 +5,9 @@ function App() {
 
   return (
     <div>
+      <h1 className="text-6xl font-bold underline">
+      Hello wollo!
+    </h1>
     <Login/>
     </div>
   )
