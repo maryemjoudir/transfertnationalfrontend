@@ -12,7 +12,7 @@ import {Index as IndexBeneficiaires} from './components/Backoffice/Beneficiaires
 
 import {Detail as DetailClient} from './components/Backoffice/Clients/Detail';
 import {Detail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Detail';
-import {Détail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Détail';
+import {Détail as DetailAgent} from './components/Backoffice/Agents/Détail';
 
 import {Update as UpdateClient} from './components/Backoffice/Clients/Update';
 import {Update as UpdateBeneficiaire} from './components/Backoffice/Beneficiaires/Update';
@@ -57,7 +57,7 @@ function App() {
         <Route
           exact
           path="/admin/agent/detail/:id"
-          element={<DetailClient />}
+          element={<DetailAgent />}
         />
         <Route
           exact
