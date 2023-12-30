@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Sidebar from '../../../layout/Sidebar'
 const DetailAgent = () => {
   return (
-    <div>Détail</div>
+    <>
+      <div className="min-h-full">
+        <Sidebar/>
+      </div>  
+    </>
   )
 }
 

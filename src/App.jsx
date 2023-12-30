@@ -22,6 +22,7 @@ import AddClient from './components/Backoffice/Clients/Add';
 import AddBeneficiaire from './components/Backoffice/Beneficiaires/Add';
 import AddAgent from './components/Backoffice/Agents/Add';
 
+import IndexParametre from './components/Backoffice/Parametres/Index';
 function App() {
 
   return (
@@ -112,6 +113,13 @@ function App() {
           exact
           path="/admin/beneficiaire/update/:id"
           element={<UpdateBeneficiaire />}
+        ></Route>
+
+        {/* Parametre */}
+        <Route
+          exact
+          path="/admin/parametre"
+          element={<IndexParametre />}
         ></Route>
 
       </Routes>

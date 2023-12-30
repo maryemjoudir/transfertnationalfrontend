@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Sidebar from '../../../layout/Sidebar'
 const UpdateClient = () => {
   return (
-    <div>Update</div>
+    <>
+      <div className="min-h-full">
+        <Sidebar />
+      </div>
+    </>
   )
 }
 
