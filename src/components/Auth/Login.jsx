@@ -12,18 +12,28 @@ export default function Login() {
         email,
         password,
       });
-
+  
       const { token } = response.data;
-
+  
       // Store the token in local storage
       localStorage.setItem('token', token);
+      setEmail('');
+      setPassword('');
+      setError('');
 
     } catch (error) {
       setEmail('');
       setPassword('');
-      setError('Votre compte n\'est pas activé ou les informations sont incorrectes.');
+  
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('Une erreur inattendue s\'est produite.');
+      }
     }
   };
+  
+  
   return (
     <>
       <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
