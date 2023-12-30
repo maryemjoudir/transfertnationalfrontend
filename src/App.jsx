@@ -56,6 +56,11 @@ function App() {
         ></Route>
         <Route
           exact
+          path="/admin/agents/add"
+          element={<AddAgent />}
+        ></Route>
+        <Route
+          exact
           path="/admin/agent/detail/:id"
           element={<DetailAgent />}
         />
@@ -64,18 +69,17 @@ function App() {
           path="/admin/agent/update/:id"
           element={<UpdateAgent />}
         ></Route>
-        <Route
-          exact
-          path="/admin/agents/add"
-          element={<AddAgent />}
-        ></Route>
-
 
         {/* Clients */}
         <Route
           exact
           path="/admin/clients/Index"
           element={<IndexClients />}
+        ></Route>
+        <Route
+          exact
+          path="/admin/clients/add"
+          element={<AddClient />}
         ></Route>
         <Route
           exact
@@ -87,11 +91,7 @@ function App() {
           path="/admin/client/update/:id"
           element={<UpdateClient />}
         ></Route>
-        <Route
-          exact
-          path="/admin/clients/add"
-          element={<AddClient />}
-        ></Route>
+
 
 
         {/* Clients */}
@@ -99,6 +99,11 @@ function App() {
           exact
           path="/admin/beneficiaires/Index"
           element={<IndexBeneficiaires />}
+        ></Route>
+        <Route
+          exact
+          path="/admin/beneficiaire/add"
+          element={<AddBeneficiaire />}
         ></Route>
         <Route
           exact
@@ -110,11 +115,7 @@ function App() {
           path="/admin/beneficiaire/update/:id"
           element={<UpdateBeneficiaire />}
         ></Route>
-        <Route
-          exact
-          path="/admin/beneficiaire/add"
-          element={<AddBeneficiaire />}
-        ></Route>
+
       </Routes>
     </Router>
 
