@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Detail() {
+const DetailClient = () => {
   return (
-    <div>Detail</div>
+    <div>detail</div>
   )
 }
+
+export default DetailClient

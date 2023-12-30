@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Détail = () => {
+const DetailAgent = () => {
   return (
     <div>Détail</div>
   )
 }
 
-export default Détail
+export default DetailAgent

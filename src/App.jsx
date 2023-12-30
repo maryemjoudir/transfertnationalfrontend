@@ -6,21 +6,21 @@ import Register from './components/Auth/Register'
 
 import Index from './components/Backoffice/Dashboard/Index';
 
-import {Index as IndexAgents} from './components/Backoffice/Agents/Index';
-import {Index as IndexClients} from './components/Backoffice/Clients/Index';
-import {Index as IndexBeneficiaires} from './components/Backoffice/Beneficiaires/Index';
+import IndexAgents from './components/Backoffice/Agents/Index';
+import IndexClients from './components/Backoffice/Clients/Index';
+import IndexBeneficiaires from './components/Backoffice/Beneficiaires/Index';
 
-import {Detail as DetailClient} from './components/Backoffice/Clients/Detail';
-import {Detail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Detail';
-import {Détail as DetailAgent} from './components/Backoffice/Agents/Détail';
+import DetailClient from './components/Backoffice/Clients/Detail';
+import DetailBeneficiaire from './components/Backoffice/Beneficiaires/Detail';
+import DetailAgent from './components/Backoffice/Agents/Détail';
 
-import {Update as UpdateClient} from './components/Backoffice/Clients/Update';
-import {Update as UpdateBeneficiaire} from './components/Backoffice/Beneficiaires/Update';
-import {Update as UpdateAgent} from './components/Backoffice/Agents/Update';
+import UpdateClient from './components/Backoffice/Clients/Update';
+import UpdateBeneficiaire from './components/Backoffice/Beneficiaires/Update';
+import UpdateAgent from './components/Backoffice/Agents/Update';
 
-import {Add as AddClient} from './components/Backoffice/Clients/Add';
-import {Add as AddBeneficiaire} from './components/Backoffice/Beneficiaires/Add';
-import {Add as AddAgent} from './components/Backoffice/Agents/Add';
+import AddClient from './components/Backoffice/Clients/Add';
+import AddBeneficiaire from './components/Backoffice/Beneficiaires/Add';
+import AddAgent from './components/Backoffice/Agents/Add';
 
 function App() {
 
@@ -79,7 +79,7 @@ function App() {
         ></Route>
         <Route
           exact
-          path="/admin/client/detail/:id"
+          path="/admin/client/detail"
           element={<DetailClient />}
         />
         <Route

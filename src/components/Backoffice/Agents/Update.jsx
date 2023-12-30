@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Update = () => {
+const UpdateAgent = () => {
   return (
     <div>Update</div>
   )
 }
 
-export default Update
+export default UpdateAgent
