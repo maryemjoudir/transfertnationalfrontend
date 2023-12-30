@@ -12,6 +12,7 @@ import {Index as IndexBeneficiaires} from './components/Backoffice/Beneficiaires
 
 import {Detail as DetailClient} from './components/Backoffice/Clients/Detail';
 import {Detail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Detail';
+import {Détail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Détail';
 
 import {Update as UpdateClient} from './components/Backoffice/Clients/Update';
 import {Update as UpdateBeneficiaire} from './components/Backoffice/Beneficiaires/Update';
