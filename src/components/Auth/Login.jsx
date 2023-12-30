@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { XCircleIcon } from '@heroicons/react/solid'
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,9 +13,7 @@ export default function Login() {
         email,
         password,
       });
-  
       const { token } = response.data;
-  
       // Store the token in local storage
       localStorage.setItem('token', token);
       setEmail('');
@@ -24,7 +23,7 @@ export default function Login() {
     } catch (error) {
       setEmail('');
       setPassword('');
-  
+
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message);
       } else {
@@ -32,18 +31,32 @@ export default function Login() {
       }
     }
   };
-  
-  
+
+
   return (
     <>
       <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
-        {error && (
-          <div className="alert alert-danger" role="alert">
-            {error}
-          </div>
-        )}
         <div className="md:w-1/2 max-w-xl bg-white p-8 rounded-lg shadow-md border border-blue-100">
+          {error && (
+            <div className="flex items-center justify-center">
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                    <div className="mt-2 text-sm text-red-700">
+                      {/* Contenu supplémentaire si nécessaire */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+
             <div className="text-center md:text-left">
               <label className="mr-1"> Sign in </label>
             </div>
@@ -52,14 +65,14 @@ export default function Login() {
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
             type="text"
             placeholder="Adresse e-mail"
-            value={email} 
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
             type="password"
             placeholder="Mot de passe"
-            value={password} 
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="mt-4 flex justify-between font-semibold text-sm">
