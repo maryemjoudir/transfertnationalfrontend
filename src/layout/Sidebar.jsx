@@ -6,7 +6,7 @@ import { IoMdPerson } from 'react-icons/io';
 import { FaUserAlt } from 'react-icons/fa'; // You can replace this with another suitable icon for "Clients"
 import { AiOutlineUser } from 'react-icons/ai'; // You can replace this with another suitable icon for "Agents"
 import { TiUser } from 'react-icons/ti'; 
-
+import logo from '../assets/images/logo1.png'
 import { CogIcon, MenuAlt1Icon, QuestionMarkCircleIcon, ShieldCheckIcon, XIcon, } from "@heroicons/react/outline"
 import Navbar from "./Navbar";
 import { Link } from 'react-router-dom';
@@ -73,10 +73,10 @@ const Sidebar = () => {
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 flex items-center px-4">
+              <div className="flex-shrink-0 flex items-center px-12">
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
+                  src={logo}
                   alt="Easywire logo"
                 />
               </div>
@@ -127,10 +127,10 @@ const Sidebar = () => {
       <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex flex-col flex-grow bg-cyan-700 pt-5 pb-4 overflow-y-auto">
-          <div className="flex items-center flex-shrink-0 px-4">
+          <div className="flex items-center flex-shrink-0 px-8">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg"
+              src={logo}
               alt="Easywire logo"
             />
           </div>
