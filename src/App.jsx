@@ -12,7 +12,7 @@ import {Index as IndexBeneficiaires} from './components/Backoffice/Beneficiaires
 
 import {Detail as DetailClient} from './components/Backoffice/Clients/Detail';
 import {Detail as DetailBeneficiaire} from './components/Backoffice/Beneficiaires/Detail';
-import {Détail as DetailAgent} from './components/Backoffice/Agents/Détail';
+import {Detail as DetailAgent} from './components/Backoffice/Agents/Detail';
 
 import {Update as UpdateClient} from './components/Backoffice/Clients/Update';
 import {Update as UpdateBeneficiaire} from './components/Backoffice/Beneficiaires/Update';
@@ -54,16 +54,16 @@ function App() {
           path="/admin/agents/Index"
           element={<IndexAgents />}
         ></Route>
-        <Route
+        {/* <Route
           exact
           path="/admin/agent/detail/:id"
           element={<DetailAgent />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           exact
           path="/admin/agent/update/:id"
           element={<UpdateAgent />}
-        ></Route>
+        ></Route> */}
         <Route
           exact
           path="/admin/agents/add"
@@ -77,16 +77,16 @@ function App() {
           path="/admin/clients/Index"
           element={<IndexClients />}
         ></Route>
-        <Route
+        {/* <Route
           exact
           path="/admin/client/detail/:id"
           element={<DetailClient />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           exact
           path="/admin/client/update/:id"
           element={<UpdateClient />}
-        ></Route>
+        ></Route> */}
         <Route
           exact
           path="/admin/clients/add"
@@ -95,21 +95,7 @@ function App() {
 
 
         {/* Clients */}
-        <Route
-          exact
-          path="/admin/beneficiaires/Index"
-          element={<IndexBeneficiaires />}
-        ></Route>
-        <Route
-          exact
-          path="/admin/beneficiaire/detail/:id"
-          element={<DetailBeneficiaire />}
-        />
-        <Route
-          exact
-          path="/admin/beneficiaire/update/:id"
-          element={<UpdateBeneficiaire />}
-        ></Route>
+      
         <Route
           exact
           path="/admin/beneficiaire/add"
