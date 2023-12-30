@@ -92,9 +92,7 @@ function App() {
           element={<UpdateClient />}
         ></Route>
 
-
-
-        {/* Clients */}
+        {/* Beneficiaires */}
         <Route
           exact
           path="/admin/beneficiaires/Index"
