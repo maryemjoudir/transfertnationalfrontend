@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Sidebar from '../../../layout/Sidebar'
 const IndexClients = () => {
   return (
-    <div>Index</div>
+    <>
+      <div className="min-h-full">
+        <Sidebar />
+      </div>
+    </>
   )
 }
 

@@ -12,7 +12,7 @@ export default function Login() {
         password,
       });
 
-      const { token, role } = response.data;
+      const { token } = response.data;
 
       // Store the token in local storage
       localStorage.setItem('token', token);

@@ -1,8 +1,12 @@
 import React from 'react'
-
+import Sidebar from '../../../layout/Sidebar'
 const AddAgent = () => {
   return (
-    <div>Add</div>
+    <>
+      <div className="min-h-full">
+        <Sidebar/>
+      </div>   
+    </>
   )
 }
 

@@ -1,13 +1,11 @@
 import React from 'react'
 import Sidebar from '../../../layout/Sidebar'
-const DetailClient = () => {
+const IndexParametre = () => {
   return (
-    <>
-      <div className="min-h-full">
+    <div className="min-h-full">
         <Sidebar />
       </div>
-    </>
   )
 }
 
-export default DetailClient
+export default IndexParametre
