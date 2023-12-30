@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
@@ -22,8 +22,25 @@ import AddClient from './components/Backoffice/Clients/Add';
 import AddBeneficiaire from './components/Backoffice/Beneficiaires/Add';
 import AddAgent from './components/Backoffice/Agents/Add';
 
-
 import IndexParametre from './components/Backoffice/Parametres/Index';
+
+import { jwtDecode } from "jwt-decode";
+
+const ProtectedRoute = ({ element, allowedRoles }) => {
+  const isAuthenticated = localStorage.getItem('token') !== null;
+
+  const decoded = isAuthenticated ? jwtDecode(localStorage.getItem('token')) : null;
+  const userRole = decoded ? decoded.authorities[0] : null;
+
+  const isRoleAllowed = allowedRoles.includes(userRole);
+
+  return isAuthenticated && isRoleAllowed ? (
+    element
+  ) : (
+    <Navigate to="/auth/login" replace />
+  );
+};
+
 function App() {
 
   return (
@@ -45,82 +62,130 @@ function App() {
 
         {/* Dashboard */}
         <Route
-          exact
           path="/admin/dashboard"
-          element={<Index />}
-        ></Route>
+          element={
+            <ProtectedRoute
+              element={<Index />}
+              allowedRoles={['ADMIN']}
+            />
+          }
+        />
 
         {/* Agents */}
         <Route
-          exact
           path="/admin/agents/Index"
-          element={<IndexAgents />}
-        ></Route>
+          element={
+            <ProtectedRoute
+              element={<IndexAgents />}
+              allowedRoles={['ADMIN']}
+            />
+          }
+        />
         <Route
           exact
           path="/admin/agents/add"
-          element={<AddAgent />}
+          element={
+            <ProtectedRoute
+              element={<AddAgent />}
+              allowedRoles={['ADMIN']}
+            />
+          }
         ></Route>
         <Route
           exact
           path="/admin/agent/detail/:id"
-          element={<DetailAgent />}
+          element={
+            <ProtectedRoute
+              element={<DetailAgent />}
+              allowedRoles={['ADMIN']}
+            />
+          }
         />
         <Route
           exact
           path="/admin/agent/update/:id"
-          element={<UpdateAgent />}
+          element={<ProtectedRoute
+            element={<UpdateAgent />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
 
         {/* Clients */}
         <Route
           exact
           path="/admin/clients/Index"
-          element={<IndexClients />}
+          element={<ProtectedRoute
+            element={<IndexClients />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
         <Route
           exact
           path="/admin/clients/add"
-          element={<AddClient />}
+          element={<ProtectedRoute
+            element={<AddClient />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
         <Route
           exact
           path="/admin/client/detail"
-          element={<DetailClient />}
+          element={<ProtectedRoute
+            element={<DetailClient />}
+            allowedRoles={['ADMIN']}
+          />}
         />
         <Route
           exact
           path="/admin/client/update/:id"
-          element={<UpdateClient />}
+          element={<ProtectedRoute
+            element={<UpdateClient />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
 
         {/* Beneficiaires */}
         <Route
           exact
           path="/admin/beneficiaires/Index"
-          element={<IndexBeneficiaires />}
+          element={<ProtectedRoute
+            element={<IndexBeneficiaires />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
         <Route
           exact
           path="/admin/beneficiaire/add"
-          element={<AddBeneficiaire />}
+          element={<ProtectedRoute
+            element={<AddBeneficiaire />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
         <Route
           exact
           path="/admin/beneficiaire/detail/:id"
-          element={<DetailBeneficiaire />}
+          element={<ProtectedRoute
+            element={<DetailBeneficiaire />}
+            allowedRoles={['ADMIN']}
+          />}
         />
         <Route
           exact
           path="/admin/beneficiaire/update/:id"
-          element={<UpdateBeneficiaire />}
+          element={<ProtectedRoute
+            element={<UpdateBeneficiaire />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
 
         {/* Parametre */}
         <Route
           exact
           path="/admin/parametre"
-          element={<IndexParametre />}
+          element={<ProtectedRoute
+            element={<IndexParametre />}
+            allowedRoles={['ADMIN']}
+          />}
         ></Route>
 
       </Routes>

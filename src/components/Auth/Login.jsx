@@ -1,33 +1,83 @@
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { XCircleIcon } from '@heroicons/react/solid'
+import logo from '../../assets/images/logo.png'
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('rememberedEmail');
+    const storedPassword = localStorage.getItem('rememberedPassword');
+
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true);
+    }
+
+    if (storedPassword) {
+      setPassword(storedPassword);
+    }
+  }, []);
+
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+  };
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8081/api/v1/auth/authenticate', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost:8081/api/v1/auth/authenticate',
+        {
+          email,
+          password,
+        }
+      );
+
       const { token } = response.data;
-      // Store the token in local storage
       localStorage.setItem('token', token);
+
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+        localStorage.setItem('rememberedPassword', password);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberedPassword');
+      }
+
+      const decoded = jwtDecode(token);
+      const authority = decoded.authorities[0];
+
       setEmail('');
       setPassword('');
-      setError('');
+      toast.success('Connexion réussie!', { autoClose: 10000 });
 
+      switch (authority) {
+        case 'ADMIN':
+          window.location.href = '/admin/dashboard';
+          break;
+        case 'AGENT':
+          window.location.href = '/transfert';
+          break;
+        case 'CLIENT':
+          window.location.href = '/client/dashboard';
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       setEmail('');
       setPassword('');
 
       if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
-        setError('Une erreur inattendue s\'est produite.');
+        toast.error('Une erreur inattendue s\'est produite.');
       }
     }
   };
@@ -36,74 +86,75 @@ export default function Login() {
   return (
     <>
       <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
+
         <div className="md:w-1/2 max-w-xl bg-white p-8 rounded-lg shadow-md border border-blue-100">
-          {error && (
-            <div className="flex items-center justify-center">
-              <div className="rounded-md bg-red-50 p-4">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
-                  </div>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-red-800">{error}</h3>
-                    <div className="mt-2 text-sm text-red-700">
-                      {/* Contenu supplémentaire si nécessaire */}
-                    </div>
-                  </div>
-                </div>
+          <ToastContainer />
+          <div className="sm:mx-auto sm:w-full sm:max-w-md mb-5">
+            <img
+              className="mx-auto h-12 w-auto"
+              src={logo}
+              alt="Workflow"
+            />
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Se connecter</h2>
+          </div>
+          <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">
+            Adresse email
+          </label>
+          <div className="mt-1">
+
+            <input
+              className="appearance-none mt-4 mb-4 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+              type="email"
+              placeholder="Adresse e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">
+            Mot de passe
+          </label>
+          <div className="mt-1">
+            <input
+              className="appearance-none mt-4 mb-4 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+              type="password"
+              placeholder="Mot de passe"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="mt-4 flex justify-between font-semibold text-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
+                  <input
+                    className="mr-1"
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={handleRememberMeChange}
+                  />
+                  <span>Se souvenir de moi</span>
+                </label>
               </div>
             </div>
-          )}
 
-          <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-
-            <div className="text-center md:text-left">
-              <label className="mr-1"> Sign in </label>
-            </div>
-          </div>
-          <input
-            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
-            type="text"
-            placeholder="Adresse e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-            type="password"
-            placeholder="Mot de passe"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className="mt-4 flex justify-between font-semibold text-sm">
-            <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
-              <input className="mr-1" type="checkbox" />
-              <span>Se souvenir de moi</span>
-            </label>
-            <a
-              className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4"
-              href="#"
-            >
-              Mot de passe oublié ?
-            </a>
           </div>
           <div className="text-center md:text-left">
             <button
-              className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-800 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
               type="submit"
               onClick={handleLogin}
             >
               Connexion
             </button>
           </div>
-          <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+          <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left ">
             Vous n'avez pas de compte ?{" "}
-            <a
-              className="text-red-600 hover:underline hover:underline-offset-4"
-              href="#"
+            <Link
+              className="text-cyan-600 hover:underline hover:underline-offset-4"
+              to={'/auth/register'}
             >
               S'inscrire
-            </a>
+            </Link>
           </div>
         </div>
       </section>
