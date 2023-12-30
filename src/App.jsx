@@ -22,6 +22,7 @@ import AddClient from './components/Backoffice/Clients/Add';
 import AddBeneficiaire from './components/Backoffice/Beneficiaires/Add';
 import AddAgent from './components/Backoffice/Agents/Add';
 
+
 function App() {
 
   return (
