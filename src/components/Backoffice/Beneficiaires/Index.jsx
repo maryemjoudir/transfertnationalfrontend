@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Index = () => {
+const IndexBeneficiaires = () => {
   return (
     <div>Index</div>
   )
 }
 
-export default Index
+export default IndexBeneficiaires

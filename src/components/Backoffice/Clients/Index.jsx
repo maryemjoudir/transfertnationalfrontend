@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Index = () => {
+const IndexClients = () => {
   return (
     <div>Index</div>
   )
 }
 
-export default Index
+export default IndexClients
