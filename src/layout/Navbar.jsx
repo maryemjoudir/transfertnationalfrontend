@@ -9,7 +9,7 @@ function classNames(...classes) {
 const Navbar = () => {
     return (
       <>
-          <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
+          <div className="flex-1 px-4 flex justify-between sm:px-6  lg:mx-auto lg:px-8 shadow" >
               <div className="flex-1 flex">
                   <form className="w-full flex md:ml-0" action="#" method="GET">
                       <label htmlFor="search-field" className="sr-only">
