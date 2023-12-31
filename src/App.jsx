@@ -103,7 +103,7 @@ function App() {
         />
         <Route
           exact
-          path="/admin/agent/update/:id"
+          path="/admin/agent/update/:username"
           element={<ProtectedRoute
             element={<UpdateAgent />}
             allowedRoles={['ADMIN']}
@@ -129,7 +129,7 @@ function App() {
         ></Route>
         <Route
           exact
-          path="/admin/client/detail"
+          path="/admin/client/detail/:username"
           element={<ProtectedRoute
             element={<DetailClient />}
             allowedRoles={['ADMIN']}
@@ -137,7 +137,7 @@ function App() {
         />
         <Route
           exact
-          path="/admin/client/update/:id"
+          path="/admin/client/update/:username"
           element={<ProtectedRoute
             element={<UpdateClient />}
             allowedRoles={['ADMIN']}
@@ -163,7 +163,7 @@ function App() {
         ></Route>
         <Route
           exact
-          path="/admin/beneficiaire/detail/:id"
+          path="/admin/beneficiaire/detail/:gsm/:username"
           element={<ProtectedRoute
             element={<DetailBeneficiaire />}
             allowedRoles={['ADMIN']}
