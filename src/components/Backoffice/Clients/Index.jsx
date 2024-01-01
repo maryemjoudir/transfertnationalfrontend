@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../layout/Sidebar'
 import axios from 'axios'
-import { PencilAltIcon, CheckCircleIcon, XCircleIcon, EyeIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon, XCircleIcon, EyeIcon } from '@heroicons/react/outline';
 
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const ITEMS_PER_PAGE = 7;
+const ITEMS_PER_PAGE = 5;
 
 const IndexClients = () => {
   const [Clients, setClients] = useState([]);
@@ -19,18 +19,25 @@ const IndexClients = () => {
   const currentClients = Clients.slice(indexOfFirstClient, indexOfLastClient);
   const [showModal, setShowModal] = useState(false); // State to manage the modal visibility
   const [ClientToDelete, setClientToDelete] = useState(null); // State to store the Client to delete
+  const [searchCriteria, setSearchCriteria] = useState('name'); // Default search criteria
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredClients = currentClients.filter((Client) =>
-    `${Client.name} ${Client.lastname}`.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleSearchCriteriaChange = (event) => {
+    setSearchCriteria(event.target.value);
+  };
+
+  const filteredClients = currentClients.filter((client) =>
+    `${client[searchCriteria]}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
 
   const handleDeleteClient = async (email) => {
@@ -119,10 +126,41 @@ const IndexClients = () => {
                                 type="text"
                                 id="search"
                                 className="p-2 pl-8 appearance-none block px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
-                                placeholder="Rechercher par nom"
+                                placeholder={`Rechercher par ${searchCriteria}`}
                                 value={searchTerm}
                                 onChange={handleSearch}
                               />
+                              <div className="relative">
+                                <select
+                                  className="p-2 pr-8 appearance-none block border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm ml-2"
+                                  value={searchCriteria}
+                                  onChange={handleSearchCriteriaChange}
+                                >
+                                  <option value="name">Nom</option>
+                                  <option value="lastname">Prénom</option>
+                                  <option value="nidentity">Code client</option>
+                                  <option value="email">E-mail</option>
+                                  <option value="gsm">N° GSM</option>
+                                  <option value="montant">Solde</option>
+                                  {/* Add other search criteria options as needed */}
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                  <svg
+                                    className="h-5 w-5 text-gray-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M19 9l-7 7-7-7"
+                                    ></path>
+                                  </svg>
+                                </div>
+                              </div>
                               <svg
                                 className="absolute left-2 top-2 text-gray-400 h-5 w-5"
                                 fill="none"
@@ -143,13 +181,7 @@ const IndexClients = () => {
                                   d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"
                                 ></path>
                               </svg>
-                              <Link
-                              to={"/admin/Clients/add"}
-                                type="button"
-                                className="inline-flex items-center ml-auto px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
-                              >
-                                Ajouter Client
-                              </Link>
+
                             </div>
                             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                               <table className="min-w-full divide-y divide-gray-300">
@@ -240,10 +272,8 @@ const IndexClients = () => {
                                           <Link className="text-green-600 hover:text-green-900" to={`/admin/client/detail/${Client.email}`}>
                                             <EyeIcon className="h-5 w-5" />
                                           </Link>
-                                          <Link to={`/admin/client/update/${Client.email}`} className="text-blue-600 hover:text-blue-900 ml-2">
-                                            <PencilAltIcon className="h-5 w-5" />
-                                          </Link>
-                                         
+
+
 
                                           <Link
                                             className={`text-red-600 hover:text-red-900 ml-2 ${!Client.estActiver ? 'cursor-not-allowed' : 'cursor-pointer'
@@ -269,31 +299,56 @@ const IndexClients = () => {
                               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
                                   <p className="text-sm text-gray-700">
-                                  Affichage de <span className="font-medium">{indexOfFirstClient + 1}</span> à{' '}
+                                    Affichage de <span className="font-medium">{indexOfFirstClient + 1}</span> à{' '}
                                     <span className="font-medium">{Math.min(indexOfLastClient, Clients.length)}</span> parmi{' '}
                                     <span className="font-medium">{Clients.length}</span> résultats
                                   </p>
                                 </div>
                                 <div>
                                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                    {[...Array(Math.ceil(Clients.length / ITEMS_PER_PAGE)).keys()].map((number) => (
-                                      <a
+                                    <button
+                                      onClick={() => paginate(currentPage - 1)}
+                                      disabled={currentPage === 1}
+                                      className={`${currentPage === 1
+                                        ? 'pointer-events-none opacity-50 bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 cursor-pointer'
+                                        } relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
+                                      style={{ borderRadius: '4px' }}
+                                    >
+                                      Précédent
+                                    </button>
+
+                                    {[...Array(Math.min(3, Math.ceil(Clients.length / ITEMS_PER_PAGE))).keys()].map((number) => (
+                                      <button
                                         key={number + 1}
-                                        href="#"
+                                        onClick={() => paginate(number + 1)}
                                         className={`${number + 1 === currentPage
                                           ? 'z-10 bg-cyan-50 border-cyan-500 text-cyan-600'
-                                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                                          } relative inline-flex items-center px-4 py-2 border text-sm font-medium `}
-                                        onClick={() => paginate(number + 1)}
+                                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 cursor-pointer'
+                                          } relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
                                         style={{ borderRadius: '4px' }}
                                       >
                                         {number + 1}
-                                      </a>
+                                      </button>
                                     ))}
 
+                                    <button
+                                      onClick={() => paginate(currentPage + 1)}
+                                      disabled={currentPage === Math.ceil(Clients.length / ITEMS_PER_PAGE)}
+                                      className={`${currentPage === Math.ceil(Clients.length / ITEMS_PER_PAGE)
+                                        ? 'pointer-events-none opacity-50 bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 cursor-pointer'
+                                        } relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
+                                      style={{ borderRadius: '4px' }}
+                                    >
+                                      Suivant
+                                    </button>
                                   </nav>
                                 </div>
+
+
                               </div>
+
                             </div>
                           </div>
                         </div>
