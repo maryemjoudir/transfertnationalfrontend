@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../layout/Sidebar'
 import axios from 'axios'
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import { PencilAltIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,7 +59,7 @@ const IndexAgents = () => {
       const updatedAgents = agents.filter((agent) => agent.email !== agentToDelete);
       setAgents(updatedAgents);
 
-      toast.success('Agent supprimé avec succès!');
+      toast.success('le compte d\'gent desactivé avec succès!');
     } catch (error) {
       console.error('Error deleting agent:', error);
       toast.error('Error deleting agent. Please try again later.');
@@ -143,7 +143,7 @@ const IndexAgents = () => {
                                 ></path>
                               </svg>
                               <Link
-                              to={"/admin/agents/add"}
+                                to={"/admin/agents/add"}
                                 type="button"
                                 className="inline-flex items-center ml-auto px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
                               >
@@ -244,7 +244,11 @@ const IndexAgents = () => {
                                               }`}
                                             onClick={() => agent.estActiver && handleDeleteAgent(agent.email)}
                                           >
-                                            <TrashIcon className={`h-5 w-5 ${!agent.estActiver ? 'text-gray-500' : ''}`} />
+                                            {agent.estActiver ? (
+                                              <CheckCircleIcon className="h-5 w-5 text-green-500 ml-2" />
+                                            ) : (
+                                              <XCircleIcon className={`h-5 w-5 text-red-500 ml-2 ${!agent.estActiver ? 'cursor-not-allowed' : 'cursor-pointer'}`} onClick={() => agent.estActiver && handleDeleteAgent(agent.email)} />
+                                            )}
                                           </Link>
                                         </div>
                                       </td>
@@ -259,22 +263,23 @@ const IndexAgents = () => {
                               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
                                   <p className="text-sm text-gray-700">
-                                    Showing <span className="font-medium">{indexOfFirstAgent + 1}</span> to{' '}
-                                    <span className="font-medium">{Math.min(indexOfLastAgent, agents.length)}</span> of{' '}
-                                    <span className="font-medium">{agents.length}</span> results
+                                  Affichage de <span className="font-medium">{indexOfFirstAgent + 1}</span> à{' '}
+                                    <span className="font-medium">{Math.min(indexOfLastAgent, agents.length)}</span> parmi{' '}
+                                    <span className="font-medium">{agents.length}</span> résultats
                                   </p>
                                 </div>
                                 <div>
-                                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination" >
                                     {[...Array(Math.ceil(agents.length / ITEMS_PER_PAGE)).keys()].map((number) => (
                                       <a
                                         key={number + 1}
                                         href="#"
                                         className={`${number + 1 === currentPage
-                                          ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                                          ? 'z-10 bg-cyan-50 border-cyan-500 text-cyan-600'
                                           : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                                           } relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
                                         onClick={() => paginate(number + 1)}
+                                        style={{ borderRadius: '4px' }}
                                       >
                                         {number + 1}
                                       </a>
@@ -306,7 +311,7 @@ const IndexAgents = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <p className="text-center text-lg font-semibold">
-                  Vous êtes sûr de vouloir supprimer cet agent ?
+                  Vous êtes sûr de vouloir désactiver le compte de cet agent ?
                 </p>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

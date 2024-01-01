@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../layout/Sidebar'
 import axios from 'axios'
-import { EyeIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import { PencilAltIcon, CheckCircleIcon, XCircleIcon, EyeIcon } from '@heroicons/react/outline';
+
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,7 +60,7 @@ const IndexClients = () => {
       const updatedClients = Clients.filter((Client) => Client.email !== ClientToDelete);
       setClients(updatedClients);
 
-      toast.success('Client supprimé avec succès!');
+      toast.success('le compte de ce client désactivé est avec succès!');
     } catch (error) {
       console.error('Error deleting Client:', error);
       toast.error('Error deleting Client. Please try again later.');
@@ -242,12 +243,18 @@ const IndexClients = () => {
                                           <Link to={`/admin/client/update/${Client.email}`} className="text-blue-600 hover:text-blue-900 ml-2">
                                             <PencilAltIcon className="h-5 w-5" />
                                           </Link>
+                                         
+
                                           <Link
                                             className={`text-red-600 hover:text-red-900 ml-2 ${!Client.estActiver ? 'cursor-not-allowed' : 'cursor-pointer'
                                               }`}
                                             onClick={() => Client.estActiver && handleDeleteClient(Client.email)}
                                           >
-                                            <TrashIcon className={`h-5 w-5 ${!Client.estActiver ? 'text-gray-500' : ''}`} />
+                                            {Client.estActiver ? (
+                                              <CheckCircleIcon className="h-5 w-5 text-green-500 ml-2" />
+                                            ) : (
+                                              <XCircleIcon className={`h-5 w-5 text-red-500 ml-2 ${!Client.estActiver ? 'cursor-not-allowed' : 'cursor-pointer'}`} onClick={() => Client.estActiver && handleDeleteClient(Client.email)} />
+                                            )}
                                           </Link>
                                         </div>
                                       </td>
@@ -262,9 +269,9 @@ const IndexClients = () => {
                               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
                                   <p className="text-sm text-gray-700">
-                                    Showing <span className="font-medium">{indexOfFirstClient + 1}</span> to{' '}
-                                    <span className="font-medium">{Math.min(indexOfLastClient, Clients.length)}</span> of{' '}
-                                    <span className="font-medium">{Clients.length}</span> results
+                                  Affichage de <span className="font-medium">{indexOfFirstClient + 1}</span> à{' '}
+                                    <span className="font-medium">{Math.min(indexOfLastClient, Clients.length)}</span> parmi{' '}
+                                    <span className="font-medium">{Clients.length}</span> résultats
                                   </p>
                                 </div>
                                 <div>
@@ -274,10 +281,11 @@ const IndexClients = () => {
                                         key={number + 1}
                                         href="#"
                                         className={`${number + 1 === currentPage
-                                          ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                                          ? 'z-10 bg-cyan-50 border-cyan-500 text-cyan-600'
                                           : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                                          } relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
+                                          } relative inline-flex items-center px-4 py-2 border text-sm font-medium `}
                                         onClick={() => paginate(number + 1)}
+                                        style={{ borderRadius: '4px' }}
                                       >
                                         {number + 1}
                                       </a>
@@ -309,7 +317,7 @@ const IndexClients = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <p className="text-center text-lg font-semibold">
-                  Vous êtes sûr de vouloir supprimer cet Client ?
+                  Vous êtes sûr de vouloir désactiver le compte ce client ?
                 </p>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
