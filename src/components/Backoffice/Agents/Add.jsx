@@ -11,6 +11,7 @@ import { Switch } from '@headlessui/react'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import logo from '../../../assets/images/logo.png';
+import { Link } from 'react-router-dom';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -36,7 +37,6 @@ const AddAgent = () => {
   //fonction pour submit data
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
     axios
       .post("http://localhost:8081/api/v1/user/admin/add-agent", formData, {
         headers: {
@@ -47,18 +47,19 @@ const AddAgent = () => {
         toast.success("Félicitations ! Le compte agent a été enregistré avec succès.");
         if (enabled) {
           setPdf(true)
-        }else{ 
+        } else {
           setFormData({
-          code: '',
-          nom: '',
-          email: '',
-          password: '',
-          ville: '',
-          adresse: '',
-          solde: 0,
-          ngsm: '',
-        });}
-       
+            code: '',
+            nom: '',
+            email: '',
+            password: '',
+            ville: '',
+            adresse: '',
+            solde: 0,
+            ngsm: '',
+          });
+        }
+
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.message) {
@@ -94,7 +95,7 @@ const AddAgent = () => {
       ngsm: '',
     })
   }
-//fonction pour générer un code automatiquement
+  //fonction pour générer un code automatiquement
   function generateRandomPassword(length) {
     const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
@@ -108,7 +109,7 @@ const AddAgent = () => {
       password += allCharacters.charAt(randomIndex);
     }
 
-    return password;
+    return password + '12Tr';
   }
 
   const generateRandomPasswordClick = () => {
@@ -137,7 +138,7 @@ const AddAgent = () => {
         <Sidebar />
         <ToastContainer />
         <div className="lg:pl-64 flex flex-col flex-1">
-          <main className="flex-1 pb-8">
+          <main className="flex-1">
             {/* ici je fais un test sur variable appeler pdf si pdf true j'affiche pdf si pdf false j'affiche formulaire pour remplir les infos */}
             {pdf ? (
               <div className="bg-white min-h-screen flex items-center justify-center">
@@ -310,7 +311,7 @@ const AddAgent = () => {
                                   placeholder='Entrer le mot de passe agent'
                                   id="password"
                                   name="password"
-                                  type="text"
+                                  type="password"
                                   autoComplete="password"
                                   required
                                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
@@ -492,6 +493,14 @@ const AddAgent = () => {
 
             )}
           </main>
+          <div className="flex justify-start p-4">
+            <Link
+              to={`/admin/agents/Index`}
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+            >
+              Retour
+            </Link>
+          </div>
         </div>
       </div>
     </>
