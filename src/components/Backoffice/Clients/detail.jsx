@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../layout/Sidebar'
 import { useParams } from 'react-router';
 import axios from 'axios';
-import { UserCircleIcon  } from '@heroicons/react/solid';
+import { UserCircleIcon } from '@heroicons/react/solid';
 import { Link } from 'react-router-dom';
 
 
@@ -51,10 +51,18 @@ const DetailClient = () => {
         <Sidebar />
         {clientData && (
           <div className="bg-white shadow overflow-hidden sm:rounded-lg lg:pl-64 flex flex-col flex-1 ms-5 m-4">
-            <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Information</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">{`${clientData.name} ${clientData.lastname}`}</p>
+            <div className="px-4 py-5 sm:px-6 flex items-center">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">Information de </h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 ms-2">{`${clientData.name} ${clientData.lastname}`}</p>
+              <Link
+                to={"/admin/clients/add"}
+                type="button"
+                className="ml-auto inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+              >
+                Ajouter client
+              </Link>
             </div>
+
             <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
               <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3">
                 <div className="sm:col-span-1">
@@ -127,7 +135,7 @@ const DetailClient = () => {
                           className="relative rounded-lg border border-gray-300 bg-white px-3 py-3 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                         >
                           <div className="flex-shrink-0">
-                            <UserCircleIcon  className="h-10 w-10 text-gray-300" />
+                            <UserCircleIcon className="h-10 w-10 text-gray-300" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <a href="#" className="focus:outline-none">
