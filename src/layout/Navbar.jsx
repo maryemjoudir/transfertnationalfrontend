@@ -4,11 +4,18 @@ import { Menu, Transition } from '@headlessui/react'
 import { BellIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon, SearchIcon } from "@heroicons/react/solid"
 import { AiOutlineUser } from 'react-icons/ai';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'; 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 const Navbar = () => {
+    const navigate = useNavigate();
+    const logout = () => {
+        if (localStorage.getItem('token') !== null) {
+            localStorage.removeItem('token');
+        }
+         navigate('/auth/login', { replace: true });
+    }
     return (
         <>
             <div className="flex-1 px-4 flex justify-between sm:px-6  lg:mx-auto lg:px-8 shadow" >
@@ -81,12 +88,12 @@ const Navbar = () => {
                                 </Menu.Item>
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <a
-                                            href="#"
+                                        <button
+                                            onClick={logout}
                                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                         >
                                             Logout
-                                        </a>
+                                        </button>
                                     )}
                                 </Menu.Item>
                             </Menu.Items>

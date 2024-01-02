@@ -85,7 +85,7 @@ export default function Login() {
 
   return (
     <>
-      <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
+      <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 bg-cyan-700">
 
         <div className="md:w-1/2 max-w-xl bg-white p-8 rounded-lg shadow-md border border-blue-100">
           <ToastContainer />

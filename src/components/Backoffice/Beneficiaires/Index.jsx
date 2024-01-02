@@ -37,8 +37,6 @@ const IndexBeneficiaires = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        console.log(response);
-
         setBeneficiaires(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des Beneficiares:', error);
