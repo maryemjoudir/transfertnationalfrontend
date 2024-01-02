@@ -28,7 +28,12 @@ const IndexParametre = () => {
           },
         })
         .then((res) => {
-          toast.success(res.data.message);
+          toast.success(res.data);
+          setFormData({
+            ancienpassword : '',
+            password :'',
+            confirmpassword :''   
+          })
         })
         .catch((error) => {
           if (error.response && error.response.data && error.response.data.message) {
